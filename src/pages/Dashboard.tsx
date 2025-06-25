@@ -37,10 +37,34 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface SidebarItem {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+  isActive?: boolean;
+  href?: string;
+  children?: {
+    title: string;
+    icon: React.ComponentType<{ className?: string }>;
+    count: number;
+  }[];
+}
+
+interface Prompt {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  lastUsed: string;
+  isFavorite: boolean;
+  author: string;
+}
+
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const sidebarItems = [
+  const sidebarItems: SidebarItem[] = [
     {
       title: "My Prompts",
       icon: FileText,
@@ -74,7 +98,7 @@ const Dashboard = () => {
     },
   ];
 
-  const recentPrompts = [
+  const recentPrompts: Prompt[] = [
     {
       id: 1,
       title: "Blog Post Writer",
