@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   SidebarProvider,
   Sidebar,
@@ -59,6 +60,7 @@ const Dashboard = () => {
       title: "Team Workspaces",
       icon: Users,
       badge: "2",
+      href: "/team-workspace",
     },
     {
       title: "Favorites",
@@ -150,21 +152,42 @@ const Dashboard = () => {
               {sidebarItems.map((item, index) => (
                 <SidebarMenuItem key={index}>
                   <SidebarMenuButton
+                    asChild={!!item.href}
                     isActive={item.isActive}
                     className="group relative"
                   >
-                    <item.icon className="h-4 w-4" />
-                    <span className="flex-1">{item.title}</span>
-                    {item.badge && (
-                      <Badge
-                        variant="secondary"
-                        className="ml-auto h-5 w-5 rounded-full bg-brand-100 text-brand-700 text-xs font-medium"
-                      >
-                        {item.badge}
-                      </Badge>
-                    )}
-                    {item.children && (
-                      <ChevronRight className="h-3 w-3 text-sidebar-foreground/60" />
+                    {item.href ? (
+                      <Link to={item.href}>
+                        <item.icon className="h-4 w-4" />
+                        <span className="flex-1">{item.title}</span>
+                        {item.badge && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-auto h-5 w-5 rounded-full bg-brand-100 text-brand-700 text-xs font-medium"
+                          >
+                            {item.badge}
+                          </Badge>
+                        )}
+                        {item.children && (
+                          <ChevronRight className="h-3 w-3 text-sidebar-foreground/60" />
+                        )}
+                      </Link>
+                    ) : (
+                      <>
+                        <item.icon className="h-4 w-4" />
+                        <span className="flex-1">{item.title}</span>
+                        {item.badge && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-auto h-5 w-5 rounded-full bg-brand-100 text-brand-700 text-xs font-medium"
+                          >
+                            {item.badge}
+                          </Badge>
+                        )}
+                        {item.children && (
+                          <ChevronRight className="h-3 w-3 text-sidebar-foreground/60" />
+                        )}
+                      </>
                     )}
                   </SidebarMenuButton>
                   {item.children && (
@@ -224,10 +247,12 @@ const Dashboard = () => {
                     className="pl-10 bg-muted/50 border-0 focus-visible:ring-1"
                   />
                 </div>
-                <Button className="gradient-bg text-white shadow-lg hover:shadow-xl transition-all duration-200">
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Prompt
-                </Button>
+                <Link to="/new-prompt">
+                  <Button className="gradient-bg text-white shadow-lg hover:shadow-xl transition-all duration-200">
+                    <Plus className="h-4 w-4 mr-2" />
+                    New Prompt
+                  </Button>
+                </Link>
               </div>
             </header>
 
